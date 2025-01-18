@@ -1,0 +1,71 @@
+Explanation of some configuration fields
+
+server_pass
+    Enter if broker is password protected. = and # are illegal characters due to
+    parsing reasons.
+
+backup_wifi_ssid
+backup_wifi_pass
+    The lamp supports editing of config fields wirelessly via the broker server.
+    If something were to happen to the lamp's wifi network (say an SSID change)
+    then the lamp would no longer be able to connect, and it would instead attempt
+    to connect to the backup network and connect to the broker afterwards. This
+    would allow the user to send the new updated configuration parameters to the
+    lamp and therefore ensure a proper connection after reboot. This would therefore
+    eliminate the need of software that can communicate with the lamp directly via
+    wire. The backup wifi can be easily brought online with a smartphone's network
+    sharing ability at need.
+
+led_fast_tick_length
+led_slow_tick_length
+    When in a critical phase of the illumination sequence (when color or brightness
+    changes rapidly), a too slow tick speed will look bad. When not in a critical
+    phase, a too fast tick speed is unnecessary. Enter a fast one and a slow one,
+    and allow the software to automatically switch between them.
+
+sensor_placed_sensitivity
+sensor_removed_sensitivity
+    The sensor works by calculating the difference in value between two subsequent
+    ticks. The value itself is derived from the hardware, and is within the range
+    [0, 65535]. A difference that is bigger than the sensitivity will trigger 
+    detection. This means that a shorter sensor tick interval will likely require
+    a higher sensitivity. Also, changing the sensor tick interval too much will
+    likely worsen the performance of this detection scheme.
+
+active_duration
+    When this lamp has been activated, it will remain so for some time. Meanwhile,
+    it will both glow itself and trigger the friend's lamp to glow as well.
+
+sleep_duration
+    When sleep mode has been activated, all incoming messages (sleep, holding and
+    activation) will be suppressed to prevent the user from being woken up. Instead
+    of the usual behaviour, all messages will be rendered as a 3 second flash. This
+    setting determines how long this mode will remain active. It will be inactivated
+    earlier if the user activates this lamp as usual.
+
+sleep_command_window
+    Sleep mode is activated when the user presses down on the sensor twice within
+    this specified time window.
+
+hold_command_threshold
+    When user is holding their hand on the sensor, it will after this duration enter
+    holding mode, meaning that this and the friend's lamp will reenact a heartbeat.
+
+active_color
+sleep_color
+    This lamp's activation and sleep mode colors. Can be entered as a RGB tuple
+    (R, G, B) with each element taking values from 0 to 255 (inclusive), or as one of
+    the predetermined colors:
+        RED = (255, 0, 0)
+        GREEN = (0, 255, 0)
+        BLUE = (0, 0, 255)
+        PURPLE = (255, 0, 255)
+        WHITE = (255, 255, 255)
+        CYAN = (0, 255, 255)
+        YELLOW = (255, 255, 0)
+        ORANGE = (255, 50, 0)
+        PINK = (255, 30, 30)
+        YELLOWORANGE = (255, 100, 0)
+        ORANGERED = (255, 25, 0)
+        CERISE = (255, 0, 50)
+        REDPURPLE = (255, 0, 150)

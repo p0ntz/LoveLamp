@@ -1,0 +1,40 @@
+# Default values. Do not change this.
+
+### HARDWARE ###
+
+led_pin = 
+num_leds = 
+sensor_pin = 
+
+### NETWORK ###
+
+name =                                  # Username. Used in network communication.
+wifi_ssid =           
+wifi_pass =                             # Optional.
+server_addr =
+server_port =                           # Optional. Defaults to 8883 if SSL is enabled and 1883 else.
+ssl =                                   # Optional.
+server_pass =                           # Optional.
+backup_wifi_ssid =                      # Optional. See guide.
+backup_wifi_pass =                      # Optional. See guide.
+connect_to_internet = False
+timeout = 60                              # seconds
+
+### PERFORMANCE ###
+
+message_check_interval = 1               # seconds
+sensor_tick_length = 0.5                 # seconds
+led_fast_tick_length = 0.05              # seconds. See guide.
+led_slow_tick_length = 1                 # seconds. See guide.
+sensor_placed_sensitivity = 15000        # From 1 to 65535. See guide.
+sensor_removed_sensitivity = -15000      # From -65535 to -1. See guide.
+
+### COLORS AND DURATIONS ###
+
+friend_name =                            # Friend's username.
+active_color = RED                       # See guide.
+sleep_color = BLUE                       # See guide.
+active_duration = 7200                   # seconds. See guide.
+sleep_duration = 28800                   # seconds. See guide.
+sleep_command_window = 7                 # seconds. See guide.
+hold_command_threshold = 5               # seconds. See guide.
