@@ -5,6 +5,42 @@ program. The class can also modify said config file after server command.
 """
 
 import colorsdatabase
+from exceptions import IllegalSetupException
+
+TYPES = {
+    'led_pin'       : int,
+    'num_leds'      : int,
+    'sensor_pin'    : int,
+    
+    'name'          : str,
+    'wifi_ssid'     : str,
+    'wifi_pass'     : str,
+    'server_addr'   : str,
+    'server_port'   : int,
+    'ssl'           : str,
+    'server_pass'   : str,
+    'backup_wifi_ssid'      : str,
+    'backup_wifi_pass'      : str,
+    'connect_to_internet'   : bool,
+    'timeout'               : int,
+    'ping_interval'         : int,
+    'dropped_ping_limit'    : int,
+    
+    'message_check_interval'    : float,
+    'sensor_tick_length'        : float,
+    'led_fast_tick_length'      : float,
+    'led_slow_tick_length'      : float,
+    'sensor_placed_sensitivity' : int,
+    'sensor_removed_sensitivity': int,
+    
+    'friend_name'       : str,
+    'active_color'      : 'color tuple',
+    'sleep_color'       : 'color tuple',
+    'active_duration'   : int,
+    'sleep_duration'    : int,
+    'sleep_command_window'      : int,
+    'hold_command_threshold'    : int
+    }
 
 class SettingsHandler:
     """
@@ -12,6 +48,7 @@ class SettingsHandler:
     
     Attributes:
         c (dict): Dictionary containing all configuration parameters.
+        types (dict): Dictionary containing the proper datatype of the parameter names.
     
     Methods:
         import_config(): Imports configuration fields into dict c.
@@ -149,6 +186,8 @@ class SettingsHandler:
         
         return setting, value
     
+    #TODO fix this bad boy and use the new constant types
+    # make sure it throws an illegalsetup error if the config field is unknown.
     def _parse_value(self, setting, value):
         """
         Converts a settings value into a suitable datatype.
@@ -161,15 +200,19 @@ class SettingsHandler:
             any: Parsed value.
         """
         
-        try:                        # Parse numeric values
-            value = float(value)
-            
-            if value % 1 == 0:      # Parse to int if possible
-                value = int(value)
-        except (ValueError, TypeError):
-            pass
+        if setting not in TYPES:
+            raise IllegalSetupException(f"Settingshandler does not recognize setting {setting}")
         
-        if setting == 'active_color' or setting == 'sleep_color':   # If setting is a colorsetting,
+        if value == "":
+            value = None
+        
+        elif TYPES[setting] == int:
+            value = int(value)
+            
+        elif TYPES[setting] == float:
+            value = float(value)
+        
+        elif TYPES[setting] == 'color tuple':
             predefined_colors = dir(colorsdatabase)                 # format into color tuple
             
             if value in predefined_colors:
@@ -178,14 +221,17 @@ class SettingsHandler:
                 value = value.replace('(', '').replace(')', '').replace(' ', '')
                 temp = value.split(',')
                 value = tuple(int(v) for v in temp)
-        
-        if setting == 'connect_to_internet':
+                
+        elif TYPES[setting] == bool:
             if value.lower() == 'true':
                 value = True
             else:
                 value = False
+            
+        elif TYPES[setting] == str:
+            pass
         
-        if value == '':     # Empty entry
-            value = None
+        else:
+            raise NotImplementedError("The expected datatype cannot be parsed by _parse_value()")
         
         return value
