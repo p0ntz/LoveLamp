@@ -62,7 +62,7 @@ class Lamp:
         self._conf = SettingsHandler()
         self._conf.import_config()
     
-    def wireless_setup(self, use_backup = False) -> None:
+    def wireless_setup(self) -> None:
         """
         Sets up server client and connects to broker.
         
@@ -73,7 +73,7 @@ class Lamp:
         self._server_client = ServerHandler()
         self._server_client.update_settings(self._conf.c)
         self._server_client.verify_setup()
-        self._server_client.connect(use_backup)
+        self._server_client.connect()
     
     def sensor_setup(self) -> None:
         """
@@ -301,5 +301,6 @@ class Lamp:
             # Sleeping (clock drift proof)
             now = time.time_ns()
             sleeptime = self._main_tick - (now - start_time) / 1e9
-                
-            time.sleep(sleeptime)
+            
+            if sleeptime > 0.0:
+                time.sleep(sleeptime)

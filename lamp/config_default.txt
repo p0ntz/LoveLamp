@@ -18,7 +18,9 @@ server_pass =                           # Optional.
 backup_wifi_ssid =                      # Optional. See guide.
 backup_wifi_pass =                      # Optional. See guide.
 connect_to_internet = False
-timeout = 60                              # seconds
+timeout = 60                            # seconds
+ping_interval = 10                      # Relative to message_check_interval. 
+dropped_ping_limit = 2                  # Number of ping intervals without a response before network is considered lost.
 
 ### PERFORMANCE ###
 

@@ -109,7 +109,7 @@ class UserCom:
             
             sleep(0.5)
             
-    def conn_err(self, code: int, duration: int):
+    def conn_err(self, code: int, duration: int = 31536000):
         """
         A connection error has occured.
         
@@ -117,7 +117,7 @@ class UserCom:
 
         Args:
             code (int): Error code of the connection error.
-            duration (int): Seconds that the error should be displayed (inexact).
+            duration (int): Seconds that the error should be displayed (inexact). Default is one year.
         """
              
         if duration != 0:
