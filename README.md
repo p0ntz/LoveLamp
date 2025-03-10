@@ -30,7 +30,7 @@ I have called it the LoveLamp because it is made as a gift to my long distance g
         pip install paho-mqtt
         ```
 
-5. Fill out config.txt and, if you want to use remote control, controller_config.txt. See config_guide.txt for assistance.
+5. Make a copy of config_default.txt called config.txt and fill it out. If you want to use remote control, make a copy of controller_config_TEMPLATE.txt and name it controller_config.txt. See config_guide.txt for assistance.
 
 6. Upload all contents of the lamp directory onto root of the microcontroller (using Thonny or some other software).
 
